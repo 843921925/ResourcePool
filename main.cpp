@@ -4,34 +4,81 @@
 #include "Vehicle.h"
 #include "Request.h"
 
+//*****************************************************
+/// jiahao pang
+/// for complie: g++ -std=c++11 *.cpp
+//*****************************************************
 int main(){
+
     ResourcePool pool;
     std::unordered_map<std::string, double> resource1;
     std::unordered_map<std::string, double> usedResource1;
     std::unordered_map<std::string, double> resource2;
     std::unordered_map<std::string, double> usedResource2;
-    resource1.insert({"cpu", 4});
-    resource1.insert({"memory", 200});
-    resource1.insert({"bandwidth", 50});
+    std::unordered_map<std::string, double> resource3;
+    std::unordered_map<std::string, double> usedResource3;
+    std::unordered_map<std::string, double> resource4;
+    std::unordered_map<std::string, double> usedResource4;
 
-    // usedResource1.insert({"cpu", 2});
-    // usedResource1.insert({"memory", 50});
-    // usedResource1.insert({"bandwidth", 10});
+    resource1.insert({"cpu", 6});
+    resource1.insert({"memory", 11});
+    resource1.insert({"bandwidth", 300});
 
-    resource2.insert({"cpu", 2});
-    resource2.insert({"memory", 300});
-    resource2.insert({"bandwidth", 150});
+    usedResource1.insert({"cpu", 0});
+    usedResource1.insert({"memory", 0});
+    usedResource1.insert({"bandwidth", 0});
+
+    resource2.insert({"cpu", 5});
+    resource2.insert({"memory", 10});
+    resource2.insert({"bandwidth", 300});
+
+    usedResource2.insert({"cpu", 0});
+    usedResource2.insert({"memory", 0});
+    usedResource2.insert({"bandwidth", 0});
+
+    resource3.insert({"cpu", 7});
+    resource3.insert({"memory", 12});
+    resource3.insert({"bandwidth", 0});
+
+    usedResource3.insert({"cpu", 0});
+    usedResource3.insert({"memory", 0});
+    usedResource3.insert({"bandwidth", 0});
+
+    resource4.insert({"cpu", 10});
+    resource4.insert({"memory", 100});
+    resource4.insert({"bandwidth", 150});
+
+    usedResource4.insert({"cpu", 10});
+    usedResource4.insert({"memory", 100});
+    usedResource4.insert({"bandwidth", 150});
 
     Vehicle vehicle1("111", &resource1, &usedResource1);
     Vehicle vehicle2("222", &resource2, &usedResource2);
+    Vehicle vehicle3("333", &resource3, &usedResource3);
+    Vehicle vehicle4("444", &resource4, &usedResource4);
+
+    vehicle1.x = 30;
+    vehicle1.y = 30;
+
+    vehicle2.x = 3;
+    vehicle2.y = 3;
+
+    vehicle3.x = 300;
+    vehicle3.y = 300;
+
+    vehicle4.x = 1;
+    vehicle4.y = 1;
 
     pool.addVehicle(&vehicle1);
     pool.addVehicle(&vehicle2);
+    pool.addVehicle(&vehicle3);
+    pool.addVehicle(&vehicle4);
+
 
     std::unordered_map<std::string, double> reqResource;
-    reqResource.insert({"cpu", 3});
-    reqResource.insert({"memory", 250});
-    Request request(&reqResource);
+    reqResource.insert({"cpu", 5});
+    reqResource.insert({"memory", 10});
+    Request request("444", &reqResource);
 
     Request remainReq = pool.requestResource(&request);
     if(!remainReq.resource.empty()){
@@ -51,7 +98,7 @@ int main(){
     std::unordered_map<std::string, double> releaseResource;
     releaseResource.insert({"cpu", 0});
     releaseResource.insert({"memory", 0});
-    Request release(&releaseResource);
+    Request release("111", &releaseResource);
 
     Request remainRelease = pool.releaseResource(&release);
 
